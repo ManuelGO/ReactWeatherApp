@@ -3,20 +3,21 @@ import LocationList from './components/LocationList';
 import './App.css';
 
 const cities = [
-  'Buenos Aires, ar',
-  'Santo Domingo, do',
-  'Washington dc,us',
-  'Ciudad de Mexico,mx',
-  'A coruna, es',
-  'Madrid, es',
-  'Miami, us'
+  'Santo Domingo,do',
+  'Toronto,ca',
+  'Mexico,mx',
+  'A coruna,es',
 ];
 
 class App extends Component {
+  handleSelectionLocation = city => {
+    console.log('HandleselectionLocation works', city)
+  }
+
   render() {
     return (
         <div className="App">
-          <LocationList cities={cities}/>
+          <LocationList cities={cities} onSelectedLocation={this.handleSelectionLocation}></LocationList>
         </div>
     );
   }

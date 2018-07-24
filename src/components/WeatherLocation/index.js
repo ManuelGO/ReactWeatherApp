@@ -12,7 +12,6 @@ const url = 'https://api.openweathermap.org/data/2.5/weather'
 
 class  WeatherLocation extends Component{  //class component: así puedo trabajar con el lifecycle, Y EL ESTADO.
     constructor({ city }){
-        console.log('constructor')
         super();
         this.state = {
             data: null,
@@ -35,26 +34,25 @@ class  WeatherLocation extends Component{  //class component: así puedo trabaja
         this.getData()
     }
     componentDidMount(){
-        console.log('did mount');
     }
     componentWillUpdate(){
-        console.log('will update');
     }
     componentDidUpdate(){
-        console.log('did update');
     }
     render = () =>{
+        const {onWeatherLocationClick}  = this.props;
         const { city, data } = this.state;
         return (
-            < div className='weatherLocationContainer' >
+            < div className='weatherLocationContainer' onClick={onWeatherLocationClick}>
                 <Location city={city}/>
                { data ? <WeatherData data={data}/> : 'cargando...' }
             </div>
         )}
 };
 
-WeatherLocation.PropTypes = {
-    city: PropTypes.string
+WeatherLocation.propTypes = {
+    city: PropTypes.string,
+    onWeatherLocationClick: PropTypes.func,
 }
 
 export default WeatherLocation;
