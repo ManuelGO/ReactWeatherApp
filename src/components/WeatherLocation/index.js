@@ -3,25 +3,26 @@ import Location from './Location';
 import WeatherData from './WeatherData';
 import './styles.css';
 import transformWeather from './../../services/transformWeather';
-import {  Preloader } from 'react-materialize';
+import PropTypes from 'prop-types';
 
 
-const location = 'Buenos Aires, ar';
 const key = 'e49083fd2506c38974d99a7f26824d4c';
-const api_weather = `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${key}&units=metric`;
+const url = 'https://api.openweathermap.org/data/2.5/weather'
+
 
 class  WeatherLocation extends Component{  //class component: así puedo trabajar con el lifecycle, Y EL ESTADO.
-    constructor(){
+    constructor({ city }){
         console.log('constructor')
         super();
         this.state = {
             data: null,
-            city: 'Buenos Aires!'
+            city,
         }
     }
     
 
     getData = () =>{
+        const api_weather = `${url}?q=${this.state.city}&appid=${key}&units=metric`;
         
         fetch(api_weather).then((data)=>{
             return data.json();
@@ -43,7 +44,6 @@ class  WeatherLocation extends Component{  //class component: así puedo trabaja
         console.log('did update');
     }
     render = () =>{
-        console.log('render')
         const { city, data } = this.state;
         return (
             < div className='weatherLocationContainer' >
@@ -52,6 +52,10 @@ class  WeatherLocation extends Component{  //class component: así puedo trabaja
             </div>
         )}
 };
+
+WeatherLocation.PropTypes = {
+    city: PropTypes.string
+}
 
 export default WeatherLocation;
 
