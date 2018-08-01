@@ -4,21 +4,7 @@ import transformForecast from '../services/transformForecast';
 import ForecastItem from './ForecastItem';
 import './styles.css';
 
-// const days = [
-//     'Lunes',
-//     'Martes',
-//     'Miécoles',
-//     'Jueves',
-//     'Viernes',
-// ];
 
-
-// const data = {
-//     temperature: 10,
-//     humidity: 10,
-//     weatherState: 'normal',
-//     wind: 'normal'
-// }  api.openweathermap.org/data/2.5/forecast?q={city name},{country code} 
 const key = 'e49083fd2506c38974d99a7f26824d4c';
 const url = 'https://api.openweathermap.org/data/2.5/forecast'
 
@@ -28,7 +14,16 @@ class ForecastExtended extends Component {
         this.state = { forecastData: null }
     }
     componentDidMount(){
-        const url_forecast = `${url}?q=${this.props.city}&appid=${key}`;
+        this.updateCity(this.props.city);
+    }
+    componentWillReceiveProps(nextProps){
+        if(nextProps !== this.props.city){
+            this.setState({forecastData: null});
+            this.updateCity(nextProps.city);
+        }        
+    }
+    updateCity = city => {
+        const url_forecast = `${url}?q=${city}&appid=${key}&units=metric`;
         fetch(url_forecast).then(
             data => data.json()
         ).then(
