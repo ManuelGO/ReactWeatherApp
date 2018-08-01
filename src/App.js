@@ -3,6 +3,7 @@ import LocationList from './components/LocationList';
 import {Grid, Row, Col} from 'react-flexbox-grid'
 import './App.css';
 import ForecastExtended from './components/ForecastExtended';
+import { createStore} from 'redux';
 //import { MuiThemeProvider} from 'material-ui/styles/MuiThemeProvider'
 
 const cities = [
@@ -10,8 +11,9 @@ const cities = [
   'Toronto,ca',
   'Mexico,mx',
   'A coruna,es',
+  'Madrid,es',
 ];
-
+const store = createStore(()=>{}, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 class App extends Component {
   //constructor es necesario para el state.
 
@@ -20,7 +22,9 @@ class App extends Component {
     this.state =  {city: null};  //esta asignación sólo se puede hacer en el constructor, a partir de ahí setState.
   }
   handleSelectionLocation = city => {
-    this.setState({ city })
+    this.setState({ city });
+    const action = {type: 'setCity', value: city};
+    store.dispatch(action);
   }
 
   render() {
