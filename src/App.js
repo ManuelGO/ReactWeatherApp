@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import LocationList from './components/LocationList';
 import {Grid, Row, Col} from 'react-flexbox-grid'
+import PropTypes from 'prop-types';
 import './App.css';
 import ForecastExtended from './components/ForecastExtended';
-import { createStore} from 'redux';
+import {setCity} from './actions';
 //import { MuiThemeProvider} from 'material-ui/styles/MuiThemeProvider'
 
 const cities = [
@@ -13,7 +15,8 @@ const cities = [
   'A coruna,es',
   'Madrid,es',
 ];
-const store = createStore(()=>{}, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+
+
 class App extends Component {
   //constructor es necesario para el state.
 
@@ -23,8 +26,7 @@ class App extends Component {
   }
   handleSelectionLocation = city => {
     this.setState({ city });
-    const action = {type: 'setCity', value: city};
-    store.dispatch(action);
+    this.props.dispatchSetCity(city);
   }
 
   render() {
@@ -57,4 +59,16 @@ class App extends Component {
   }
 }
 
-export default App;
+App.propTypes = {
+  dispatchSetCity: PropTypes.func.isRequired,
+}
+
+const mapDispatchToPropsActions = dispatch => ({
+  dispatchSetCity: value => dispatch(setCity(value))
+});
+
+
+
+const AppConnected = connect(null, mapDispatchToPropsActions)(App);
+
+export default AppConnected;
