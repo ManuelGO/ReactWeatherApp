@@ -1,13 +1,13 @@
 import { createStore , applyMiddleware, compose} from 'redux';
 import thunk from 'redux-thunk';
-import  {city} from './../reducers/city';
+import reducers from './../reducers';
 
 const initialState = {
     city: 'Buenos Aires'
 };
 
 export const store = createStore(
-        city, 
+        reducers, 
         initialState,
         compose(
             applyMiddleware(thunk,),
