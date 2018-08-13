@@ -10,8 +10,11 @@ const LocationList = ({ cities, onSelectedLocation}) => {
     }
     
     const strToComp = cities => {
-        return cities.map( city => (<WeatherLocation key={city} city={city}   
-                        onWeatherLocationClick={()=>handleWeatherLocationClick(city)}/>))
+        return cities.map( city => (<WeatherLocation 
+                                        key={city.key} 
+                                        city={city.name}
+                                        data={city.data}   
+                                        onWeatherLocationClick={()=>handleWeatherLocationClick(city.name)} />))
      }
      
    return( 
